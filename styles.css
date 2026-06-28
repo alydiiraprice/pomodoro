@@ -1,22 +1,33 @@
-
-/* Flexboxes */
-/* element style */
-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+/* Responsive Grid Layout */
+* {
+    box-sizing: border-box;
 }
 
-/* class style (.) */
-.container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: center;
+/* Using the 12-grid layout structure */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, [col-start] 1fr);
 }
 
-.list {
-    list-style: none;
+.leftside {
+    grid-area: leftside;
+    grid-column: 1/ span 4;
+    background-color: aqua;
 }
+
+.timer {
+    grid-area: timer;
+    grid-column: 5/ span 4 ;
+    background-color: gold;
+}
+
+.rightside {
+    grid-area: rightside;
+    grid-column: 9/ span 4;
+    background-color: palegreen;
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {...}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
