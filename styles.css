@@ -1,33 +1,150 @@
 /* Responsive Grid Layout */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* add bg color */
+}
+
+:root {
+    --gap: 1rem;
+    --bg: #1e1e1e;
+    --text: #ffffff;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
 }
 
 /* Using the 12-grid layout structure */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(12, [col-start] 1fr);
+    gap: var(--gap);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "leftside-gutter"
+        "menu"
+        "tabcontent"
+        "rightside-gutter";
+    padding: var(--gap);
 }
 
-.leftside {
-    grid-area: leftside;
-    grid-column: 1/ span 4;
-    background-color: aqua;
+.leftside-gutter {
+    grid-area: leftside-gutter;
+    justify-self: center;
 }
 
-.timer {
-    grid-area: timer;
-    grid-column: 5/ span 4 ;
-    background-color: gold;
+.menu {
+    grid-area: menu;
+    /* grid-column: 5/ span 2 ; */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-self: stretch;
 }
 
-.rightside {
-    grid-area: rightside;
-    grid-column: 9/ span 4;
-    background-color: palegreen;
+.rightside-gutter {
+    grid-area: rightside-gutter;
+    justify-self: center;
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 992px) {...}
+/* Buttons */
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* Style tab links */
+.tablink {
+   background-color: #555;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 100%;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* ===== Tab content as a centered overlay ===== */
+.tabcontent {
+    /* take it out of grid flow entirely, position relative to viewport */
+    position: fixed;
+    inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
+    
+    /* center whatever's inside */
+    display: none; /* JS toggles this to 'flex' to open */
+    align-items: center;
+    justify-content: center;
+    
+    background-color: rgba(0, 0, 0, 0.6); /* dimmed backdrop over the page */
+    z-index: 100; /* sit above the grid layout */
+    
+    padding: 20px;
+}
+
+.tabcontent.active {
+    display: flex;
+}
+
+/* the actual panel/card inside the overlay */
+.tabcontent .panel {
+    background-color: var(--bg, #2a2a2a);
+    color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#Pomodoro .panel   { background-color: red; }
+#ShortBreak .panel { background-color: green; }
+#LongBreak .panel  { background-color: aqua; }
+
+/* Tablets (768px+): menu becomes a row of 3 buttons, gutters appear beside it */
+@media only screen and (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-areas:
+            "leftside-gutter menu rightside-gutter";
+        align-items: start;
+    }
+
+    .menu {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* Laptops/desktops (992px+): restore your original 12-col proportions */
+@media only screen and (min-width: 992px) {
+    .grid-container {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:
+            "leftside-gutter leftside-gutter leftside-gutter leftside-gutter menu menu menu menu rightside-gutter rightside-gutter rightside-gutter rightside-gutter"
+            "tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent tabcontent";
+    }
+
+    /* center the panel itself, not just its grid area */
+    .tabcontent {
+        justify-self: center;
+        align-self: center;
+        width: 60%;
+        max-width: 600px;
+    }
+}
+
+/* Large desktops (1200px+): give the layout more breathing room */
+@media only screen and (min-width: 1200px) {
+    .grid-container {
+        max-width: 1400px;
+        margin-inline: auto;
+        gap: 2rem;
+    }
+}

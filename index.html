@@ -5,15 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Pomodoro Timer</title>
+    <script>
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+
+            document.getElementById(pageName).classList.add("active");
+            elmnt.style.backgroundColor = color;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("defaultOpen").click();
+        });
+    </script>
 </head>
 <body>
     <div class="grid-container">
-        <div class="leftside"><p>hi</p></div>
-        <div class="timer"><p>hi</p></div>
-        <div class="rightside"><p>hi</p></div>
+        <div class="leftside-gutter"></div>
 
+        <div class="menu">
+            <button class="tablink" onclick="openPage('Pomodoro', this, 'red')" id="defaultOpen">Pomodoro</button>
+            <button class="tablink" onclick="openPage('ShortBreak', this, 'green')">Short Break</button>
+            <button class="tablink" onclick="openPage('LongBreak', this, 'aqua')">Long Break</button>
+        </div>
+
+        <div class="rightside-gutter"></div>
     </div>
-    
-    
+
+    <!-- Overlays live outside the grid so they can sit fixed over the whole page -->
+    <div id="Pomodoro" class="tabcontent">
+        <div class="panel">
+            <h3>Pomodoro</h3>
+            <p>here is the timer</p>
+        </div>
+    </div>
+
+    <div id="ShortBreak" class="tabcontent">
+        <div class="panel">
+            <h3>Settings</h3>
+            <p>here are the settings</p>
+        </div>
+    </div>
+
+    <div id="LongBreak" class="tabcontent">
+        <div class="panel">
+            <h3>Settings</h3>
+            <p>here are the settings</p>
+        </div>
+    </div>
 </body>
 </html>
